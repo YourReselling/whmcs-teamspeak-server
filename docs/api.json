@@ -1,0 +1,1778 @@
+{
+  "contractDigest": "a6cdf1be65f4bcb63fd16c07820052f53ccff30819262ec5393061ac44e03956",
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/products/teamspeak/servers/create",
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:172",
+      "required_fields": [
+        "name",
+        "slots"
+      ],
+      "response_id_path": "data.id",
+      "body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Server name (max 255 characters)",
+            "example": "Mein TS3 Server",
+            "maxLength": 255,
+            "x-validation": [
+              "required",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "slots": {
+            "type": "integer",
+            "description": "Number of slots",
+            "example": 32,
+            "minimum": 1,
+            "x-validation": [
+              "required",
+              "integer",
+              "min:1"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "name",
+          "slots"
+        ]
+      },
+      "bodyRequired": true,
+      "pathParameters": [],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "permissions": [
+        "teamspeak:create"
+      ],
+      "responseMode": "json"
+    },
+    {
+      "id": "GET /products/teamspeak/servers/{server}",
+      "group": "teamspeak",
+      "name": "serversShow",
+      "method": "GET",
+      "path": "/products/teamspeak/servers/{server}",
+      "summary": "Show TeamSpeak server details",
+      "description": "Returns detailed information about a specific TeamSpeak virtual server.",
+      "germanSummary": "TeamSpeak-Server Details anzeigen",
+      "permissions": [
+        "teamspeak:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Server details",
+          "germanDescription": "Server-Details",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "Mein TS3 Server",
+              "status": "running",
+              "status_label": "Aktiv",
+              "slots": 32,
+              "port": 9987,
+              "ip_address": "192.168.1.1",
+              "node_name": "TS Node 1",
+              "price_name": "TeamSpeak Server",
+              "created_at": "2025-01-15T10:30:00+00:00",
+              "admin_token": "abc123xyz",
+              "error_message": null,
+              "admin_lock_reason": null,
+              "tsdns_hostname": "meinserver",
+              "tsdns_domain": "ts.example.com",
+              "tsdns_full_address": "meinserver.ts.example.com"
+            }
+          },
+          "contentType": "application/json"
+        },
+        {
+          "status": 404,
+          "description": "Server not found",
+          "germanDescription": "Server nicht gefunden",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:125",
+      "routeName": "api.teamspeak.servers.show"
+    },
+    {
+      "method": "POST",
+      "path": "/products/teamspeak/servers/{server}/delete",
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:305",
+      "semantics": "delete TeamSpeak server",
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "permissions": [
+        "teamspeak:delete"
+      ],
+      "responseMode": "json"
+    },
+    {
+      "id": "GET /products/teamspeak/servers/{server}/bans",
+      "group": "teamspeak",
+      "name": "serversBans",
+      "method": "GET",
+      "path": "/products/teamspeak/servers/{server}/bans",
+      "summary": "List bans",
+      "description": "Returns a list of all bans on the TeamSpeak server.",
+      "germanSummary": "Bans auflisten",
+      "permissions": [
+        "teamspeak:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Ban list",
+          "germanDescription": "Ban-Liste",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": [
+              {
+                "banid": 1,
+                "ip": "192.168.1.100",
+                "name": "",
+                "uid": "",
+                "reason": "Spamming",
+                "duration": 3600,
+                "created_at": 1705312200,
+                "invokername": "ServerAdmin"
+              }
+            ]
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:541",
+      "routeName": "api.teamspeak.servers.bans"
+    },
+    {
+      "id": "GET /products/teamspeak/servers/{server}/channels",
+      "group": "teamspeak",
+      "name": "serversChannels",
+      "method": "GET",
+      "path": "/products/teamspeak/servers/{server}/channels",
+      "summary": "Get channel tree",
+      "description": "Returns the channel tree with nested sub-channels for a running server.",
+      "germanSummary": "Kanalbaum abrufen",
+      "permissions": [
+        "teamspeak:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Channel tree",
+          "germanDescription": "Kanalbaum",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": [
+              {
+                "cid": 1,
+                "pid": 0,
+                "channel_name": "Default Channel",
+                "total_clients": 2,
+                "max_clients": -1,
+                "children": []
+              }
+            ]
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:500",
+      "routeName": "api.teamspeak.servers.channels"
+    },
+    {
+      "id": "GET /products/teamspeak/servers/{server}/clients",
+      "group": "teamspeak",
+      "name": "serversClients",
+      "method": "GET",
+      "path": "/products/teamspeak/servers/{server}/clients",
+      "summary": "List connected clients",
+      "description": "Returns a list of all connected clients on a running TeamSpeak server.",
+      "germanSummary": "Verbundene Clients auflisten",
+      "permissions": [
+        "teamspeak:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Client list",
+          "germanDescription": "Client-Liste",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": [
+              {
+                "clid": 5,
+                "cid": 1,
+                "client_nickname": "MaxMustermann",
+                "client_type": 0,
+                "client_database_id": 12,
+                "client_unique_identifier": "abc123=",
+                "connection_connected_time": 3600
+              }
+            ]
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:353",
+      "routeName": "api.teamspeak.servers.clients"
+    },
+    {
+      "id": "GET /products/teamspeak/servers/{server}/complaints",
+      "group": "teamspeak",
+      "name": "serversComplaints",
+      "method": "GET",
+      "path": "/products/teamspeak/servers/{server}/complaints",
+      "summary": "List complaints",
+      "description": "Returns a list of all complaints on the TeamSpeak server.",
+      "germanSummary": "Beschwerden auflisten",
+      "permissions": [
+        "teamspeak:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Complaint list",
+          "germanDescription": "Beschwerde-Liste",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": [
+              {
+                "tcldbid": 12,
+                "tname": "Ziel-Client",
+                "fcldbid": 5,
+                "fname": "Absender-Client",
+                "message": "Stoert andere Nutzer",
+                "timestamp": 1705312200
+              }
+            ]
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:676",
+      "routeName": "api.teamspeak.servers.complaints"
+    },
+    {
+      "id": "GET /products/teamspeak/servers/{server}/stats",
+      "group": "teamspeak",
+      "name": "serversStats",
+      "method": "GET",
+      "path": "/products/teamspeak/servers/{server}/stats",
+      "summary": "Get server statistics",
+      "description": "Returns connection statistics and live data for a running server.",
+      "germanSummary": "Server-Statistiken abrufen",
+      "permissions": [
+        "teamspeak:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Server statistics",
+          "germanDescription": "Server-Statistiken",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "stats": {
+                "bandwidth_sent": 1024,
+                "bandwidth_received": 2048,
+                "bytes_sent_total": 1073741824,
+                "bytes_received_total": 2147483648,
+                "packets_sent_total": 500000,
+                "packets_received_total": 750000
+              },
+              "clients_online": 5,
+              "maxclients": 32,
+              "uptime": 86400
+            }
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:1136",
+      "routeName": "api.teamspeak.servers.stats"
+    },
+    {
+      "id": "GET /products/teamspeak/servers/{server}/stats/history",
+      "group": "teamspeak",
+      "name": "serversStatsHistory",
+      "method": "GET",
+      "path": "/products/teamspeak/servers/{server}/stats/history",
+      "summary": "Get historical statistics",
+      "description": "Returns historical server statistics for a given time period.",
+      "germanSummary": "Historische Statistiken abrufen",
+      "permissions": [
+        "teamspeak:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "description": "Time period (1h, 6h, 24h, 7d, 30d)",
+            "type": "string",
+            "default": "24h"
+          }
+        },
+        "additionalProperties": true,
+        "required": []
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Historical statistics",
+          "germanDescription": "Historische Statistiken",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": [
+              {
+                "clients_online": 5,
+                "bandwidth_sent": 1024,
+                "bandwidth_received": 2048,
+                "bytes_sent_total": 1073741824,
+                "bytes_received_total": 2147483648,
+                "uptime": 86400,
+                "recorded_at": "2025-01-15T10:30:00+00:00"
+              }
+            ],
+            "period": "24h"
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:1182",
+      "routeName": "api.teamspeak.servers.stats.history"
+    },
+    {
+      "id": "GET /products/teamspeak/servers/{server}/tokens",
+      "group": "teamspeak",
+      "name": "serversTokens",
+      "method": "GET",
+      "path": "/products/teamspeak/servers/{server}/tokens",
+      "summary": "List tokens",
+      "description": "Returns a list of all privilege keys (tokens) and server groups.",
+      "germanSummary": "Tokens auflisten",
+      "permissions": [
+        "teamspeak:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Token list",
+          "germanDescription": "Token-Liste",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "tokens": [
+                {
+                  "token": "abc123xyz456",
+                  "type": 0,
+                  "group_id": 6,
+                  "description": "Admin-Zugang"
+                }
+              ],
+              "server_groups": [
+                {
+                  "sgid": 6,
+                  "name": "Server Admin",
+                  "type": 1
+                },
+                {
+                  "sgid": 7,
+                  "name": "Normal",
+                  "type": 1
+                }
+              ]
+            }
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:761",
+      "routeName": "api.teamspeak.servers.tokens"
+    },
+    {
+      "id": "POST /products/teamspeak/servers/{server}/bans/clear",
+      "group": "teamspeak",
+      "name": "serversBansClear",
+      "method": "POST",
+      "path": "/products/teamspeak/servers/{server}/bans/clear",
+      "summary": "Clear all bans",
+      "description": "Removes all bans from the TeamSpeak server.",
+      "germanSummary": "Alle Bans loeschen",
+      "permissions": [
+        "teamspeak:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Bans cleared",
+          "germanDescription": "Bans geloescht",
+          "schema": null,
+          "example": {
+            "success": true
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:638",
+      "routeName": "api.teamspeak.servers.bans.clear",
+      "label": "Sperrliste leeren"
+    },
+    {
+      "id": "POST /products/teamspeak/servers/{server}/bans/create",
+      "group": "teamspeak",
+      "name": "serversBansCreate",
+      "method": "POST",
+      "path": "/products/teamspeak/servers/{server}/bans/create",
+      "summary": "Create a ban",
+      "description": "Creates a new ban rule on the TeamSpeak server. At least one of ip, name, or uid must be provided.",
+      "germanSummary": "Ban erstellen",
+      "permissions": [
+        "teamspeak:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "ip": {
+            "type": "string",
+            "description": "IP address to ban (max 255 characters)",
+            "example": "192.168.1.100",
+            "maxLength": 255,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "name": {
+            "type": "string",
+            "description": "Name pattern to ban (max 255 characters)",
+            "example": "Spammer*",
+            "maxLength": 255,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "uid": {
+            "type": "string",
+            "description": "Unique ID to ban (max 255 characters)",
+            "example": "abc123def456=",
+            "maxLength": 255,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "duration": {
+            "type": "integer",
+            "description": "Ban duration in seconds (0 or null = permanent)",
+            "example": 3600,
+            "minimum": 0,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "integer",
+              "min:0"
+            ],
+            "x-validation-expressions": []
+          },
+          "reason": {
+            "type": "string",
+            "description": "Ban reason (max 255 characters)",
+            "example": "Spamming",
+            "maxLength": 255,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": []
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Ban created",
+          "germanDescription": "Ban erstellt",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "banid": 5
+            }
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:574",
+      "routeName": "api.teamspeak.servers.bans.create",
+      "label": "Sperre erstellen"
+    },
+    {
+      "id": "POST /products/teamspeak/servers/{server}/channels/create",
+      "group": "teamspeak",
+      "name": "serversChannelsCreate",
+      "method": "POST",
+      "path": "/products/teamspeak/servers/{server}/channels/create",
+      "summary": "Create a channel",
+      "description": "Creates a new channel on the TeamSpeak server.",
+      "germanSummary": "Kanal erstellen",
+      "permissions": [
+        "teamspeak:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Channel name (max 40 characters)",
+            "example": "Gaming Lobby",
+            "maxLength": 40,
+            "x-validation": [
+              "required",
+              "string",
+              "max:40"
+            ],
+            "x-validation-expressions": []
+          },
+          "parent_id": {
+            "type": "integer",
+            "description": "Parent channel ID (0 = root)",
+            "example": 0,
+            "minimum": 0,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "integer",
+              "min:0"
+            ],
+            "x-validation-expressions": []
+          },
+          "password": {
+            "type": "string",
+            "description": "Channel password (max 255 characters)",
+            "example": "geheim123",
+            "maxLength": 255,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "max_clients": {
+            "type": "integer",
+            "description": "Max clients (-1 = unlimited, max 300)",
+            "example": -1,
+            "minimum": -1,
+            "maximum": 300,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "integer",
+              "min:-1",
+              "max:300"
+            ],
+            "x-validation-expressions": []
+          },
+          "topic": {
+            "type": "string",
+            "description": "Channel topic (max 255 characters)",
+            "example": "Willkommen im Gaming-Kanal",
+            "maxLength": 255,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "description": {
+            "type": "string",
+            "description": "Channel description (max 8192 characters)",
+            "example": "Hier wird gezockt!",
+            "maxLength": 8192,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "string",
+              "max:8192"
+            ],
+            "x-validation-expressions": []
+          },
+          "codec": {
+            "type": "integer",
+            "description": "Audio codec (0=Speex Narrowband, 1=Speex Wideband, 2=Speex Ultra-Wideband, 3=CELT Mono, 4=Opus Voice, 5=Opus Music)",
+            "example": 4,
+            "minimum": 0,
+            "maximum": 5,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "integer",
+              "min:0",
+              "max:5"
+            ],
+            "x-validation-expressions": []
+          },
+          "codec_quality": {
+            "type": "integer",
+            "description": "Codec quality (0-10, higher = better)",
+            "example": 6,
+            "minimum": 0,
+            "maximum": 10,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "integer",
+              "min:0",
+              "max:10"
+            ],
+            "x-validation-expressions": []
+          },
+          "is_permanent": {
+            "type": "boolean",
+            "description": "Permanent channel (stays after restart)",
+            "example": true,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "boolean"
+            ],
+            "x-validation-expressions": []
+          },
+          "is_semi_permanent": {
+            "type": "boolean",
+            "description": "Semi-permanent channel (stays until empty)",
+            "example": false,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "boolean"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "name"
+        ]
+      },
+      "bodyRequired": true,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Channel created",
+          "germanDescription": "Kanal erstellt",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "cid": 5
+            }
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:915",
+      "routeName": "api.teamspeak.servers.channels.create",
+      "label": "Kanal erstellen"
+    },
+    {
+      "id": "POST /products/teamspeak/servers/{server}/clients/kick",
+      "group": "teamspeak",
+      "name": "serversClientsKick",
+      "method": "POST",
+      "path": "/products/teamspeak/servers/{server}/clients/kick",
+      "summary": "Kick a client",
+      "description": "Kicks a connected client from the server or channel.",
+      "germanSummary": "Client kicken",
+      "permissions": [
+        "teamspeak:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "clid": {
+            "type": "integer",
+            "description": "Client ID to kick",
+            "example": 5,
+            "x-validation": [
+              "required",
+              "integer"
+            ],
+            "x-validation-expressions": []
+          },
+          "reason": {
+            "type": "string",
+            "description": "Kick reason (max 255 characters)",
+            "example": "Regelverstoß",
+            "maxLength": 255,
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "type": {
+            "type": "string",
+            "description": "Kick type: server or channel",
+            "enum": [
+              "server",
+              "channel"
+            ],
+            "example": "server",
+            "nullable": true,
+            "x-validation": [
+              "nullable",
+              "string",
+              "in:server,channel"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "clid"
+        ]
+      },
+      "bodyRequired": true,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Client kicked",
+          "germanDescription": "Client gekickt",
+          "schema": null,
+          "example": {
+            "success": true
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:381",
+      "routeName": "api.teamspeak.servers.clients.kick",
+      "label": "Client entfernen"
+    },
+    {
+      "id": "POST /products/teamspeak/servers/{server}/clients/move",
+      "group": "teamspeak",
+      "name": "serversClientsMove",
+      "method": "POST",
+      "path": "/products/teamspeak/servers/{server}/clients/move",
+      "summary": "Move a client",
+      "description": "Moves a connected client to a different channel.",
+      "germanSummary": "Client verschieben",
+      "permissions": [
+        "teamspeak:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "clid": {
+            "type": "integer",
+            "description": "Client ID to move",
+            "example": 5,
+            "x-validation": [
+              "required",
+              "integer"
+            ],
+            "x-validation-expressions": []
+          },
+          "cid": {
+            "type": "integer",
+            "description": "Target channel ID",
+            "example": 2,
+            "x-validation": [
+              "required",
+              "integer"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "clid",
+          "cid"
+        ]
+      },
+      "bodyRequired": true,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Client moved",
+          "germanDescription": "Client verschoben",
+          "schema": null,
+          "example": {
+            "success": true
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:418",
+      "routeName": "api.teamspeak.servers.clients.move",
+      "label": "Client verschieben"
+    },
+    {
+      "id": "POST /products/teamspeak/servers/{server}/clients/poke",
+      "group": "teamspeak",
+      "name": "serversClientsPoke",
+      "method": "POST",
+      "path": "/products/teamspeak/servers/{server}/clients/poke",
+      "summary": "Poke a client",
+      "description": "Sends a poke message to a connected client.",
+      "germanSummary": "Client anstupsen",
+      "permissions": [
+        "teamspeak:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "clid": {
+            "type": "integer",
+            "description": "Client ID to poke",
+            "example": 5,
+            "x-validation": [
+              "required",
+              "integer"
+            ],
+            "x-validation-expressions": []
+          },
+          "message": {
+            "type": "string",
+            "description": "Poke message (max 100 characters)",
+            "example": "Bitte leiser sprechen",
+            "maxLength": 100,
+            "x-validation": [
+              "required",
+              "string",
+              "max:100"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "clid",
+          "message"
+        ]
+      },
+      "bodyRequired": true,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Client poked",
+          "germanDescription": "Client angestupst",
+          "schema": null,
+          "example": {
+            "success": true
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:453",
+      "routeName": "api.teamspeak.servers.clients.poke",
+      "label": "Client anstupsen"
+    },
+    {
+      "id": "PATCH /products/teamspeak/servers/{server}/settings",
+      "group": "teamspeak",
+      "name": "serversSettingsUpdate",
+      "method": "PATCH",
+      "path": "/products/teamspeak/servers/{server}/settings",
+      "summary": "Update server settings",
+      "description": "Updates server properties like name, welcome message, and host banner.",
+      "germanSummary": "Server-Einstellungen aktualisieren",
+      "permissions": [
+        "teamspeak:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Server name (max 255 characters)",
+            "example": "Mein TS3 Server",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "welcome_message": {
+            "type": "string",
+            "description": "Welcome message shown on connect (max 1024 characters)",
+            "example": "Willkommen auf unserem Server!",
+            "maxLength": 1024,
+            "nullable": true,
+            "x-validation": [
+              "sometimes",
+              "nullable",
+              "string",
+              "max:1024"
+            ],
+            "x-validation-expressions": []
+          },
+          "hostbanner_url": {
+            "type": "string",
+            "description": "URL opened when clicking the host banner",
+            "example": "https://example.com",
+            "format": "uri",
+            "maxLength": 512,
+            "nullable": true,
+            "x-validation": [
+              "sometimes",
+              "nullable",
+              "url",
+              "max:512"
+            ],
+            "x-validation-expressions": []
+          },
+          "hostbanner_gfx_url": {
+            "type": "string",
+            "description": "URL of the host banner image",
+            "example": "https://example.com/banner.png",
+            "format": "uri",
+            "maxLength": 512,
+            "nullable": true,
+            "x-validation": [
+              "sometimes",
+              "nullable",
+              "url",
+              "max:512"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": []
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Settings updated",
+          "germanDescription": "Einstellungen aktualisiert",
+          "schema": null,
+          "example": {
+            "success": true
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:1088",
+      "routeName": "api.teamspeak.servers.settings.update",
+      "label": "Server-Einstellungen"
+    },
+    {
+      "id": "POST /products/teamspeak/servers/{server}/start",
+      "group": "teamspeak",
+      "name": "serversStart",
+      "method": "POST",
+      "path": "/products/teamspeak/servers/{server}/start",
+      "summary": "Start a TeamSpeak server",
+      "description": "Starts a stopped TeamSpeak virtual server.",
+      "germanSummary": "TeamSpeak-Server starten",
+      "permissions": [
+        "teamspeak:power"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Server started",
+          "germanDescription": "Server gestartet",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "Mein TS3 Server",
+              "status": "running",
+              "status_label": "Aktiv"
+            }
+          },
+          "contentType": "application/json"
+        },
+        {
+          "status": 404,
+          "description": "Server not found",
+          "germanDescription": "Server nicht gefunden",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        },
+        {
+          "status": 409,
+          "description": "Server not in stoppable state",
+          "germanDescription": "Server nicht im startbaren Zustand",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:233",
+      "routeName": "api.teamspeak.servers.start",
+      "label": "Starten"
+    },
+    {
+      "id": "POST /products/teamspeak/servers/{server}/stop",
+      "group": "teamspeak",
+      "name": "serversStop",
+      "method": "POST",
+      "path": "/products/teamspeak/servers/{server}/stop",
+      "summary": "Stop a TeamSpeak server",
+      "description": "Stops a running TeamSpeak virtual server.",
+      "germanSummary": "TeamSpeak-Server stoppen",
+      "permissions": [
+        "teamspeak:power"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Server stopped",
+          "germanDescription": "Server gestoppt",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "Mein TS3 Server",
+              "status": "stopped",
+              "status_label": "Gestoppt"
+            }
+          },
+          "contentType": "application/json"
+        },
+        {
+          "status": 404,
+          "description": "Server not found",
+          "germanDescription": "Server nicht gefunden",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        },
+        {
+          "status": 409,
+          "description": "Server not running",
+          "germanDescription": "Server laeuft nicht",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:269",
+      "routeName": "api.teamspeak.servers.stop",
+      "label": "Stoppen"
+    },
+    {
+      "id": "PATCH /products/teamspeak/servers/{server}/tsdns",
+      "group": "teamspeak",
+      "name": "serversTsdnsUpdate",
+      "method": "PATCH",
+      "path": "/products/teamspeak/servers/{server}/tsdns",
+      "summary": "Update TSDNS hostname",
+      "description": "Sets or updates the TSDNS hostname for a TeamSpeak server.",
+      "germanSummary": "TSDNS-Hostname aktualisieren",
+      "permissions": [
+        "teamspeak:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "hostname": {
+            "type": "string",
+            "description": "Hostname (lowercase, alphanumeric, hyphens, max 63 characters)",
+            "example": "mein-server",
+            "maxLength": 63,
+            "x-validation": [
+              "required",
+              "string",
+              "max:63",
+              "regex:/^[a-z0-9]([a-z0-9\\-]*[a-z0-9])?$/"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "hostname"
+        ]
+      },
+      "bodyRequired": true,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "TSDNS updated",
+          "germanDescription": "TSDNS aktualisiert",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "tsdns_hostname": "mein-server",
+              "tsdns_full_address": "mein-server.ts.example.com"
+            }
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:1245",
+      "routeName": "api.teamspeak.servers.tsdns.update",
+      "label": "TS-DNS bearbeiten"
+    },
+    {
+      "id": "POST /products/teamspeak/servers/{server}/tsdns/remove",
+      "group": "teamspeak",
+      "name": "serversTsdnsRemove",
+      "method": "POST",
+      "path": "/products/teamspeak/servers/{server}/tsdns/remove",
+      "summary": "Remove TSDNS hostname",
+      "description": "Removes the TSDNS hostname from a TeamSpeak server.",
+      "germanSummary": "TSDNS-Hostname entfernen",
+      "permissions": [
+        "teamspeak:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [
+        {
+          "name": "server",
+          "type": "string",
+          "description": "Server ID"
+        }
+      ],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "TSDNS removed",
+          "germanDescription": "TSDNS entfernt",
+          "schema": null,
+          "example": {
+            "success": true
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Teamspeak/TeamspeakServerController.php:1292",
+      "routeName": "api.teamspeak.servers.tsdns.remove",
+      "label": "TS-DNS entfernen"
+    },
+    {
+      "id": "GET /account",
+      "group": "account",
+      "name": "get",
+      "method": "GET",
+      "path": "/account",
+      "summary": "Get account details",
+      "description": "Returns the authenticated reseller account details including company information, contact details, tax information, enabled products, and credit balance.",
+      "germanSummary": "Kontoinformationen abrufen",
+      "permissions": [
+        "account:read"
+      ],
+      "authenticated": true,
+      "pathParameters": [],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Account details",
+          "germanDescription": "Kontoinformationen",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "id": "9e1a2b3c-4d5e-6f7a-8b9c-0d1e2f3a4b5c",
+              "company_name": "Example GmbH",
+              "contact_name": "Max Mustermann",
+              "email": "max@example.com",
+              "phone": "+49 123 456789",
+              "address": "Musterstraße 1",
+              "city": "Berlin",
+              "zip": "10115",
+              "country": "DE",
+              "tax_id": "DE123456789",
+              "tax_type": "eu_vat",
+              "status": "active",
+              "enabled_products": [
+                "rootserver",
+                "domains",
+                "kubernetes"
+              ],
+              "is_main_reseller": true,
+              "credit_limit": "500.00",
+              "credit_used": "123.45",
+              "credit_available": "376.55",
+              "created_at": "2025-01-15T10:30:00.000000Z"
+            }
+          },
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Account/AccountController.php:53",
+      "routeName": "api.account.show"
+    },
+    {
+      "id": "PATCH /account",
+      "group": "account",
+      "name": "update",
+      "method": "PATCH",
+      "path": "/account",
+      "summary": "Update account details",
+      "description": "Updates non-critical account fields such as company name, contact name, phone, and address. Email, tax ID, and status cannot be changed via API.",
+      "germanSummary": "Kontoinformationen aktualisieren",
+      "permissions": [
+        "account:update"
+      ],
+      "authenticated": true,
+      "pathParameters": [],
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "company_name": {
+            "type": "string",
+            "description": "Company name",
+            "example": "Example GmbH",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "contact_name": {
+            "type": "string",
+            "description": "Contact person name",
+            "example": "Max Mustermann",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number",
+            "example": "+49 123 456789",
+            "maxLength": 50,
+            "nullable": true,
+            "x-validation": [
+              "sometimes",
+              "nullable",
+              "string",
+              "max:50"
+            ],
+            "x-validation-expressions": []
+          },
+          "address": {
+            "type": "string",
+            "description": "Street address",
+            "example": "Musterstraße 1",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "city": {
+            "type": "string",
+            "description": "City",
+            "example": "Berlin",
+            "maxLength": 255,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:255"
+            ],
+            "x-validation-expressions": []
+          },
+          "zip": {
+            "type": "string",
+            "description": "ZIP code",
+            "example": "10115",
+            "maxLength": 20,
+            "x-validation": [
+              "sometimes",
+              "string",
+              "max:20"
+            ],
+            "x-validation-expressions": []
+          }
+        },
+        "additionalProperties": true,
+        "required": []
+      },
+      "bodyRequired": false,
+      "requestContentType": "application/json",
+      "responseMode": "json",
+      "responses": [
+        {
+          "status": 200,
+          "description": "Account updated successfully",
+          "germanDescription": "Konto erfolgreich aktualisiert",
+          "schema": null,
+          "example": {
+            "success": true,
+            "data": {
+              "id": "9e1a2b3c-4d5e-6f7a-8b9c-0d1e2f3a4b5c",
+              "company_name": "Updated GmbH",
+              "contact_name": "Max Mustermann"
+            }
+          },
+          "contentType": "application/json"
+        },
+        {
+          "status": 422,
+          "description": "Validation error",
+          "germanDescription": "Validierungsfehler",
+          "schema": null,
+          "example": null,
+          "contentType": "application/json"
+        }
+      ],
+      "deprecated": false,
+      "source": "app/Http/Controllers/Api/V1/Account/AccountController.php:92",
+      "routeName": "api.account.update"
+    }
+  ]
+}
